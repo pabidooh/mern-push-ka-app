@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect /*для колбэков*/} from "react"; 
 import axios from "axios";
-import styled from "styled-components";
+import styled from "styled-components"; // стили
 import { useNavigate, Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.svg"; //импорт логотипа
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css"; // тостовый файл реагирования
 import { registerRoute } from "../utils/APIRoutes";
 
 export default function Register() {
   const navigate = useNavigate();
-  const toastOptions = {
+  const toastOptions = { //объект с параметрами
     position: "bottom-right",
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
     theme: "dark",
   };
-  const [values, setValues] = useState({
+  const [values, setValues] = useState({ // начальные параметры = пустым строкам
     username: "",
     email: "",
     password: "",
@@ -29,40 +29,40 @@ export default function Register() {
     }
   }, []);
 
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+  const handleChange = (event) => { // функция изменения дескриптора, чтобы конст обрабатывала событие изменения
+    setValues({ ...values, [event.target.name]: event.target.value }); // указываем контрольную точку
   };
 
-  const handleValidation = () => {
+  const handleValidation = () => { // проверка дескриптора = объекта
     const { password, confirmPassword, username, email } = values;
     if (password !== confirmPassword) {
-      toast.error(
-        "Password and confirm password should be same.",
+      toast.error( // точка ошибки
+        "Пароль не совпадают, а должны",
         toastOptions
       );
       return false;
     } else if (username.length < 3) {
       toast.error(
-        "Username should be greater than 3 characters.",
+        "Имя должно быть не менее 3 символов",
         toastOptions
       );
       return false;
     } else if (password.length < 8) {
       toast.error(
-        "Password should be equal or greater than 8 characters.",
+        "Пароль должен включать не менее 8 символов",
         toastOptions
       );
       return false;
     } else if (email === "") {
-      toast.error("Email is required.", toastOptions);
+      toast.error("Обязательно внесите почту, а то вдруг пароль забудите", toastOptions);
       return false;
     }
 
     return true;
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => { //асинхронная обработка отправки 
+    event.preventDefault(); //точка события по умолчанию
     if (handleValidation()) {
       const { email, username, password } = values;
       const { data } = await axios.post(registerRoute, {
@@ -84,19 +84,19 @@ export default function Register() {
     }
   };
 
-  return (
+  return ( // контейнер формы
     <>
       <FormContainer>
-        <form action="" onSubmit={(event) => handleSubmit(event)}>
+        <form action="" onSubmit={(event) => handleSubmit(event)}> 
           <div className="brand">
-            <img src={Logo} alt="logo" />
+            <img src={Logo} alt="logo" />  
             <h1>push-ka</h1>
           </div>
           <input
             type="text"
             placeholder="Username"
             name="username"
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChange(e)} 
           />
           <input
             type="email"
@@ -122,12 +122,13 @@ export default function Register() {
           </span>
         </form>
       </FormContainer>
-      <ToastContainer />
+      <ToastContainer /> 
     </>
   );
-}
+}//↑ контейнер тоста ошибки
 
-const FormContainer = styled.div`
+//стилизация внутри контейнера
+const FormContainer = styled.div` 
   height: 100vh;
   width: 100vw;
   display: flex;
