@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); // формализация данных для запроса в БД
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 8,
   },
-  isAvatarImageSet: {
+  isAvatarImageSet: {//при регистрации аватара ещё нету, поэтому закладываемся 
     type: Boolean,
     default: false,
   },
@@ -29,4 +29,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Users", userSchema);
+module.exports = mongoose.model("Users", userSchema); // экспорт 

@@ -6,7 +6,7 @@ const {
   logOut,
 } = require("../controllers/userController");
 
-const router = require("express").Router();
+const router = require("express").Router(); // маршрутизато равный требуему
 
 router.post("/login", login);
 router.post("/register", register);

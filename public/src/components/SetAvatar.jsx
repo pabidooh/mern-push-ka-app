@@ -8,11 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { setAvatarRoute } from "../utils/APIRoutes";
 export default function SetAvatar() {
-  const api = `https://api.multiavatar.com/4645646`;
+  const api = `https://api.multiavatar.com/4645646`; //апи с открытым исходным кодом нужно втыкнуть рнд число и от него будут генерится остальные
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
+  const [selectedAvatar, setSelectedAvatar] = useState(undefined); //сначала пусто
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -54,7 +54,7 @@ export default function SetAvatar() {
 
   useEffect(async () => {
     const data = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) { //вытащим 4 картинки
       const image = await axios.get(
         `${api}/${Math.round(Math.random() * 1000)}`
       );
@@ -73,7 +73,7 @@ export default function SetAvatar() {
       ) : (
         <Container>
           <div className="title-container">
-            <h1>Pick an Avatar as your profile picture</h1>
+            <h1>Выберите свой аватар</h1>
           </div>
           <div className="avatars">
             {avatars.map((avatar, index) => {
@@ -94,7 +94,7 @@ export default function SetAvatar() {
             })}
           </div>
           <button onClick={setProfilePicture} className="submit-btn">
-            Set as Profile Picture
+            Давай её
           </button>
           <ToastContainer />
         </Container>
@@ -102,8 +102,8 @@ export default function SetAvatar() {
     </>
   );
 }
-
-const Container = styled.div`
+//стили
+const Container = styled.div` 
   display: flex;
   justify-content: center;
   align-items: center;

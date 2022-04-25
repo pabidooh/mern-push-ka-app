@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginRoute } from "../utils/APIRoutes";
+import { /*заменяем*/loginRoute } from "../utils/APIRoutes";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function Login() {
     theme: "dark",
   };
   useEffect(() => {
-    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {//ключ текущего пользователя приложения
       navigate("/");
     }
   }, []);
@@ -30,10 +30,10 @@ export default function Login() {
   const validateForm = () => {
     const { username, password } = values;
     if (username === "") {
-      toast.error("Email and Password is required.", toastOptions);
+      toast.error("Не путю без мыла и пароля", toastOptions);
       return false;
     } else if (password === "") {
-      toast.error("Email and Password is required.", toastOptions);
+      toast.error("Не путю без мыла и пароля", toastOptions);
       return false;
     }
     return true;

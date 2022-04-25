@@ -2,7 +2,7 @@ const express = require("express"); // require обеспечивает асин
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/auth"); //(27 стр)
 const messageRoutes = require("./routes/messages");
 
 const app = express(); //вызов экспресс функции
@@ -24,7 +24,7 @@ mongoose // передаём .env
     console.log(err.message);
   });
 
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); // маршрут внутри пользовательских маршрутов 
 app.use("/api/messages", messageRoutes);
 
 const server = app.listen(process.env.PORT, () => //мы передадим функцию обратного вызова
