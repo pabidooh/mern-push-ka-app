@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef /*socket*/ } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
+import { io } from "socket.io-client"; // клиентская библиотека
 import styled from "styled-components";
-import { allUsersRoute, host } from "../utils/APIRoutes";
+import { allUsersRoute, host } from "../utils/APIRoutes"; // импорт хоста
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 
 export default function Chat() {
   const navigate = useNavigate();
-  const socket = useRef();
+  const socket = useRef(); // конст сокет равный useRef
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -26,9 +26,9 @@ export default function Chat() {
     }
   }, []);
   useEffect(() => {
-    if (currentUser) {
-      socket.current = io(host);
-      socket.current.emit("add-user", currentUser._id);
+    if (currentUser) { // текущий пользователь
+      socket.current = io(host); //импорт хоста
+      socket.current.emit("add-user", currentUser._id); //
     }
   }, [currentUser]);
 

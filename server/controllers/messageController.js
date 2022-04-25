@@ -4,15 +4,15 @@ module.exports.getMessages = async (req, res, next) => {
   try {
     const { from, to } = req.body;
 
-    const messages = await Messages.find({
+    const messages = await Messages.find({ //ищет сообщения
       users: {
         $all: [from, to],
       },
-    }).sort({ updatedAt: 1 });
+    }).sort({ updatedAt: 1 });//сортировка
 
     const projectedMessages = messages.map((msg) => {
       return {
-        fromSelf: msg.sender.toString() === from,
+        fromSelf: msg.sender.toString() === from,//ищем сообщения текущего пользователя
         message: msg.message.text,
       };
     });
@@ -31,8 +31,8 @@ module.exports.addMessage = async (req, res, next) => {
       sender: from,
     });
 
-    if (data) return res.json({ msg: "Message added successfully." });
-    else return res.json({ msg: "Failed to add message to the database" });
+    if (data) return res.json({ msg: "Сообщение успешно добавлено" });
+    else return res.json({ msg: "Чёт не получилось в БД запушить(" });
   } catch (ex) {
     next(ex);
   }

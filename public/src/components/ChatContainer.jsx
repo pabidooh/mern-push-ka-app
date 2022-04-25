@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "./ChatInput";
 import Logout from "./Logout";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid"; // генерация уникальных ид на сообщения
 import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 
-export default function ChatContainer({ currentChat, socket }) {
-  const [messages, setMessages] = useState([]);
+export default function ChatContainer({ currentChat, socket }) {//запускаем каждый раз, когда чат меняется
+  const [messages, setMessages] = useState([]); //изначально пустой
   const scrollRef = useRef();
-  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);//сообщение о прибытии = использованию data 
 
   useEffect(async () => {
     const data = await JSON.parse(
@@ -19,7 +19,7 @@ export default function ChatContainer({ currentChat, socket }) {
       from: data._id,
       to: currentChat._id,
     });
-    setMessages(response.data);
+    setMessages(response.data); // точка ответа
   }, [currentChat]);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function ChatContainer({ currentChat, socket }) {
     setMessages(msgs);
   };
 
-  useEffect(() => {
+  useEffect(() => { //сообщение о прибытии
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
@@ -61,12 +61,12 @@ export default function ChatContainer({ currentChat, socket }) {
     }
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {// захватываем текущие и предыдущие сообщения
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });//ссылка на прокрутку
   }, [messages]);
 
   return (

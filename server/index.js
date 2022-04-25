@@ -3,7 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const authRoutes = require("./routes/auth"); //(27 стр)
-const messageRoutes = require("./routes/messages");
+const messageRoutes = require("./routes/messages");// маршрут сообщения
 
 const app = express(); //вызов экспресс функции
 const socket = require("socket.io");
@@ -32,22 +32,24 @@ const server = app.listen(process.env.PORT, () => //мы передадим фу
 );
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
-    credentials: true,
+    origin: "http://localhost:3000", //передаём в соет сервер, который мы создали
+    credentials: true, // учётные данные 
   },
 });
 
-global.onlineUsers = new Map();
-io.on("connection", (socket) => {
-  global.chatSocket = socket;
-  socket.on("add-user", (userId) => {
-    onlineUsers.set(userId, socket.id);
+global.onlineUsers = new Map(); //глобальный объект ввод - вывод для сокет ио
+io.on("connection", (socket) => { //точка соединения, получение сокета внутри обратного вызова
+  global.chatSocket = socket; //глобальный чат, равный сокету
+  socket.on("add-user", (userId) => { //точка сокета, чтобы добавить пользователя с ИД
+    onlineUsers.set(userId, socket.id); //установили состояние онлайн для пользователя и сокета
   });
 
-  socket.on("send-msg", (data) => {
-    const sendUserSocket = onlineUsers.get(data.to);
+  socket.on("send-msg", (data) => { //захват данных, которые мы передаём 
+    const sendUserSocket = onlineUsers.get(data.to); // если пользователь в сети, то отправим сокет
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-    }
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);//хранение сокета чата внутри глобального сокета, устанавливаем соединение
+      //возьмем индификатор Пользователя и текущий ид сокета и устанавливаем его внутри карты
+    }//если второй пользователь онлайн, то сообщение запишется в БД и чат обновится без прерывания сервера
+    //если он офлайн, то сообщение будет сохранено в БД, и при открытии стр отобразиться
   });
 });

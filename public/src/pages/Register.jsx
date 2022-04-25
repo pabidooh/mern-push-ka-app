@@ -118,7 +118,7 @@ export default function Register() {
           />
           <button type="submit">Создать учётку</button>
           <span>
-            Всё-таки есть аккаунт? <Link to="/login">Возвращайся :)</Link>
+            Вспомнил свой аккаунт? Давай проверим <Link to="/login">здесь :)</Link>
           </span>
         </form>
       </FormContainer>
