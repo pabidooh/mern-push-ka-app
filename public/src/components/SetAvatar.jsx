@@ -23,7 +23,7 @@ export default function SetAvatar() {
 
   useEffect(async () => {
     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY))
-      navigate("/login");
+      navigate("/login");//проверка авторизации
   }, []);
 
   const setProfilePicture = async () => {
